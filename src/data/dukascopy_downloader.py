@@ -1,28 +1,28 @@
 """
 Dukascopy Historical Data Downloader
-
-Downloads historical XAUUSD data from Dukascopy.
 """
 
-from pathlib import Path
+import httpx
 
-from config.paths import RAW_DATA_DIR
 from src.utils.logger import get_logger
 
 
 class DukascopyDownloader:
-    """
-    Downloader for Dukascopy historical data.
-    """
+    """Downloader for Dukascopy historical data."""
+
+    BASE_URL = "https://freeserv.dukascopy.com/2.0/"
 
     def __init__(self) -> None:
         self.logger = get_logger(self.__class__.__name__)
-        self.output_directory: Path = RAW_DATA_DIR
 
-        self.logger.info("Dukascopy downloader initialized.")
+        self.client = httpx.Client(
+            timeout=30.0,
+            follow_redirects=True,
+        )
 
-    def get_output_directory(self) -> Path:
-        """
-        Return the raw data directory.
-        """
-        return self.output_directory
+        self.logger.info("Downloader initialized.")
+
+    def close(self) -> None:
+        """Close the HTTP client."""
+        self.client.close()
+        self.logger.info("Downloader closed.")
