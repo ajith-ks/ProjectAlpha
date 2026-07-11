@@ -1,7 +1,13 @@
-from src.data.dukascopy_downloader import DukascopyDownloader
+import json
+from pathlib import Path
 
-downloader = DukascopyDownloader()
+from src.models import Instrument
 
-print("Downloader initialized successfully.")
+metadata = Path("resources/instruments/dukascopy.json")
 
-downloader.close()
+with metadata.open(encoding="utf-8") as file:
+    instruments = json.load(file)
+
+gold = Instrument(**instruments[0])
+
+print(gold)
