@@ -6,7 +6,7 @@ Do not hardcode configuration values elsewhere.
 """
 
 from zoneinfo import ZoneInfo
-
+from config.paths import RAW_DATA_DIR, LOG_DIR
 # ==========================================================
 # Project Information
 # ==========================================================
@@ -55,10 +55,11 @@ RISK_REWARD = 2.0
 
 DATA_SOURCE = "Dukascopy"
 
-DATA_DIRECTORY = "data/raw"
+DATA_DIRECTORY = RAW_DATA_DIR
+
 
 # ==========================================================
 # Logging
 # ==========================================================
 
-LOG_DIRECTORY = "logs"
+LOG_DIRECTORY = LOG_DIR
